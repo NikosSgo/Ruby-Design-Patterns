@@ -6,6 +6,12 @@ def DivisorsNotDivisibleBy3(number)
 end
 
 
+#Метод 2 Найти минимальную нечетную цифру числа.
+
+def MinNotAnEvenDigit(number)
+	digits = number.to_s.split("").map(&:to_i).select {|digit| digit%2!=0}
+	return digits.min
+end
 
 
 
