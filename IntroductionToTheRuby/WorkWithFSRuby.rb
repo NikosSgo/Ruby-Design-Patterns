@@ -1,7 +1,9 @@
 require_relative "MinimalAndNumberFirstPositiveElementsArray"
 def read_array_from_file(file_name)
 	begin
-		File.read(file_name).split(',').map(&:strip)
+		File.open(file_name,"r") do |file|
+			array = file.read.split(',').map(&:strip)
+		end
 	rescue Errno::ENOENT => e
 		# Обработка ошибки, если файл не найден
 		puts "Ошибка: Файл не найден - #{e.message}"
