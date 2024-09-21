@@ -1,18 +1,18 @@
-def MinimalElement(array)
+def minimal_element(array)
 	if array.length > 0 then
-		minElement = array[0]
+		min_element = array[0]
 		for x in array do
-			if minElement > x then
-				minElement = x
+			if min_element > x then
+				min_element = x
 			end
 		end
-		return minElement
+		return min_element
 	else 
 		return nil
 	end
 end
 
-def NumberFirstPositiveElement(array)
+def number_first_positive_element(array)
 	if array.length > 0 then
 		for i in 0..array.length-1 do
 			if array[i] > 0 then

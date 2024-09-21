@@ -25,9 +25,9 @@ languages = [
 
 puts "#{name}, какой у тебя любимый язык программирования?"
 
-favouriteLanguage = gets.chomp
+favourite_language = gets.chomp
 
-case favouriteLanguage.downcase
+case favourite_language.downcase
 when "ruby"
 	puts "#{name}, ты подлиза!"
 when "fortran"
@@ -49,13 +49,13 @@ end
 
 puts 'Введите команду ОС:'
 
-osCommand = gets.chomp
+os_command = gets.chomp
 
 puts "Результат выполнения команды ОС:"
-puts `#{osCommand}`
+puts `#{os_command}`
 
 puts 'Введи команду на языке Ruby:'
-rubyCommand = gets.chomp
+ruby_command = gets.chomp
 
 puts "Результат выполнения команды Ruby:"
 eval(rubyCommand)
