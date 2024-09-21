@@ -18,15 +18,15 @@ end
 #цифр числа и не взаимно простых с произведением цифр числа.
 
 def sum_devisors(number)
-	sumDigits =  0
-	productDigits = 1
+	sum_digits =  0
+	product_digits = 1
 	digits = number.to_s.split("").map(&:to_i).each do |x|
-		sumDigits += x
-		productDigits *= x
+		sum_digits += x
+		product_digits *= x
 	end
 	puts "Сумма - #{sumDigits}, произведение - #{productDigits}"
-	sumDevisors = 0
-	devisors = (1..number).select { |devisor| number%devisor == 0 and devisor.gcd(sumDigits) == 1 and devisor.gcd(productDigits) != 1}.each { |x| sumDevisors+= x}
+	sum_devisors = 0
+	devisors = (1..number).select { |devisor| number%devisor == 0 and devisor.gcd(sum_digits) == 1 and devisor.gcd(product_digits) != 1}.each { |x| sum_devisors+= x}
 	return sumDevisors
 end
 
