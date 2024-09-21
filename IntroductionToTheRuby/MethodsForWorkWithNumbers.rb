@@ -24,7 +24,6 @@ def sum_devisors(number)
 		sum_digits += x
 		product_digits *= x
 	end
-	puts "Сумма - #{sumDigits}, произведение - #{productDigits}"
 	sum_devisors = 0
 	devisors = (1..number).select { |devisor| number%devisor == 0 and devisor.gcd(sum_digits) == 1 and devisor.gcd(product_digits) != 1}.each { |x| sum_devisors+= x}
 	return sumDevisors
