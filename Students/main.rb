@@ -5,3 +5,6 @@ second_student = Student.new(surname: "Григоренко", name: "Никит�
 
 puts "Данные первого студента : #{first_student}. Содержит гит и любой контакт: #{first_student.has_git_and_any_contact? ? "Да." : "Нет."}"
 puts "Данные второго студента :#{second_student}. Содержит гит и любой контакт: #{second_student.has_git_and_any_contact? ? "Да." : "Нет."}"
+
+second_student.set_contacts(email: "BigNikita@gmail.com")
+puts "Данные второго студента после изменения методом set_contacts:#{second_student}. Содержит гит и любой контакт: #{second_student.has_git_and_any_contact? ? "Да." : "Нет."}"

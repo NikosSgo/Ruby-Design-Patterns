@@ -1,7 +1,7 @@
 class Student
-  attr_accessor :id, :surname, :name, :patronymic, :telegram, :email, :git
+  attr_accessor :id, :surname, :name, :patronymic, :git
   
-  attr_reader :phone
+  attr_reader :phone, :telegram, :email
 
   def initialize(surname:, name:, patronymic:, id: nil, phone: nil, telegram: nil, email: nil, git: nil)
     @id = id
@@ -54,14 +54,27 @@ class Student
 	return has_git? && has_any_contact?
   end
   
-  def phone=(phone)
+  private def phone=(phone)
     if !phone.nil? && self.class.valid_phone?(phone)
       @phone = phone
     else
-      raise ArgumentError, "Неверный формат телефонного номера"
+      raise ArgumentError, "Неверный формат телефонного номера."
     end
   end
   
+  private def email=(email)
+      @email = email
+  end
+  
+  private def telegram=(telegram)
+      @telegram = telegram
+  end
+  
+  def set_contacts(phone: nil, telegram: nil, email: nil)
+	self.phone = phone if !phone.nil?
+	self.telegram = telegram if !telegram.nil?
+	self.email = email if !email.nil?
+  end
   
   def to_s
     str = "surname: #{@surname}, name: #{@name}, patronymic: #{@patronymic}"
