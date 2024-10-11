@@ -38,10 +38,22 @@ class Student
     email =~ /\A[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z_-]+\z/
   end
   
-  def self.valid_git?(email)
-    email =~ /\Ahttps:\/\/github\.com\/[A-Za-z0-9_-]+\/?[A-Za-z0-9_-]*\z/
+  def self.valid_git?(git)
+    git =~ /\Ahttps:\/\/github\.com\/[A-Za-z0-9_-]+\/?[A-Za-z0-9_-]*\z/
   end
-	
+  
+  def has_git?
+	return !self.git.nil?
+  end
+  
+  def has_any_contact?
+	return !self.telegram.nil? || !self.email.nil? || !self.phone.nil?
+  end
+  
+  def has_git_and_any_contact?
+	return has_git? && has_any_contact?
+  end
+  
   def phone=(phone)
     if !phone.nil? && self.class.valid_phone?(phone)
       @phone = phone
@@ -49,6 +61,7 @@ class Student
       raise ArgumentError, "Неверный формат телефонного номера"
     end
   end
+  
   
   def to_s
     str = "surname: #{@surname}, name: #{@name}, patronymic: #{@patronymic}"
