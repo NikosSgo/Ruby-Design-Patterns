@@ -14,6 +14,42 @@ class Student
     @git = git
   end
 
+  def self.valid_phone?(phone)
+    phone =~ /\A(\+7|8)?\s?(\(?\d{3}\)?[\s-]?)?[\d\s-]{7,10}\z/
+  end
+  
+  def self.valid_name?(name)
+    name =~ /\A[A-ZА-ЯЁ][a-zа-яё]+\z/
+  end
+  
+  def self.valid_surname?(surname)
+    surname =~ /\A[A-ZА-ЯЁ][a-zа-яё]+\z/
+  end
+  
+  def self.valid_patronymic?(patronymic)
+    patronymic =~ /\A[A-ZА-ЯЁ][a-zа-яё]+\z/
+  end
+  
+  def self.valid_telegram?(telegram)
+    telegram =~ /\A\@[a-zA-Z0-9_]{5,32}\z/
+  end
+  
+  def self.valid_email?(email)
+    email =~ /\A[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z_-]+\z/
+  end
+  
+  def self.valid_git?(email)
+    email =~ /\Ahttps:\/\/github\.com\/[A-Za-z0-9_-]+\/?[A-Za-z0-9_-]*\z/
+  end
+	
+  def phone=(phone)
+    if !phone.nil? && self.class.valid_phone?(phone)
+      @phone = phone
+    else
+      raise ArgumentError, "Неверный формат телефонного номера"
+    end
+  end
+  
   def to_s
     str = "surname: #{@surname}, name: #{@name}, patronymic: #{@patronymic}"
     str += ", id: #{@id}" if @id
@@ -22,18 +58,5 @@ class Student
     str += ", email: #{@email}" if @email
     str += ", git: #{@git}" if @git
     return str
-  end
-
-  def self.valid_phone?(phone)
-    phone =~ /\A(\+7|8)?\s?(\(?\d{3}\)?[\s-]?)?[\d\s-]{7,10}\z/
-  end
-
-  def phone=(phone)
-    if !phone.nil? && self.class.valid_phone?(phone)
-	  puts "#{phone.nil?}"
-      @phone = phone
-    else
-      raise ArgumentError, "Неверный формат телефонного номера"
-    end
   end
 end
