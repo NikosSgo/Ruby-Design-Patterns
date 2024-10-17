@@ -5,6 +5,14 @@ class StudentShort < BaseStudent
   
   attr_reader :surname_and_initials, :contact
   
+  private def id
+    @id
+  end
+  
+  private def git
+    @git
+  end
+  
   #################################################
   
   # Инициализаторы
@@ -22,7 +30,7 @@ class StudentShort < BaseStudent
     StudentShort.new(hash["surname_and_initials"], id, hash["git"], hash["contact"])
   end
   
-  def self.from_student(student = nil)
+  def self.from_student(student)
     if !student.nil?
       StudentShort.new(student.surname_and_initials, student.id, student.git, student.get_contacts[0])
     else

@@ -2,8 +2,8 @@ require_relative "BaseStudent"
 require "json"
 
 class Student < BaseStudent
-  
-  attr_reader :surname, :name, :patronymic, :phone, :telegram, :email
+  attr_accessor :surname, :name, :patronymic	
+  attr_reader :phone, :telegram, :email
 
   #################################################
   

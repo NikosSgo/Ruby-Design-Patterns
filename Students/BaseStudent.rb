@@ -5,7 +5,9 @@ class BaseStudent
   include StudentValidator
 
   #################################################
-  attr_reader :id, :git
+  
+  attr_accessor :id, :git
+  
   #Инициализация
   
   protected

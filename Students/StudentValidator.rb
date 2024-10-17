@@ -4,16 +4,15 @@ module StudentValidator
     surname: ->(value) { valid_full_name?(value) },
     name: ->(value) { valid_full_name?(value) },
     patronymic: ->(value) { valid_full_name?(value) },
-	surname_and_initials: ->(value) { valid_surname_and_initials?(value) },
+    surname_and_initials: ->(value) { valid_surname_and_initials?(value) },
     phone: ->(value) { value.nil? || valid_phone?(value) },
     telegram: ->(value) { value.nil? || valid_telegram?(value) },
     email: ->(value) { value.nil? || valid_email?(value) },
-	git: ->(value) { value.nil? || valid_git?(value) },
+    git: ->(value) { value.nil? || valid_git?(value) },
     contact: ->(value) { value.nil? || valid_contact?(value) },
-	
   }
   
-  def validate_attributes(binding)
+  protected def validate_attributes(binding, validations = VALIDATIONS)
     
     method_name = binding.eval('__method__')
 	args = method(method_name).parameters.map { |_, name| [name, binding.local_variable_get(name)] }.to_h
