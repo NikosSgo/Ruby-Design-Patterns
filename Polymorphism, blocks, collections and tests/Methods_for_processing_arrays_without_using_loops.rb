@@ -14,5 +14,12 @@ def swap_min_and_max_el(array)
 	el
   end
 end
-	
+
+def contains_max_element_in_interval?(array,a,b)
+  max = array.max
+  array.each_index.select {|i| array[i] ==  max}.any? {|i| i>=a && i<=b}
+  
+end
+
+
 
