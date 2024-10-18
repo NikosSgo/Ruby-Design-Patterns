@@ -21,5 +21,8 @@ def contains_max_element_in_interval?(array,a,b)
   
 end
 
+def arithmetic_mean_abs_el_array(array)
+  array.map(&:abs).sum.to_f/array.length
+end
 
 
