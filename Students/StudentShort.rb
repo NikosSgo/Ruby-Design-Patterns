@@ -3,6 +3,10 @@ require "json"
 
 class StudentShort < BaseStudent
   
+  #################################################
+  
+  #Геттеры и сеттеры
+  
   attr_reader :surname_and_initials, :contact
   
   private def id

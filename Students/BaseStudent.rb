@@ -6,7 +6,11 @@ class BaseStudent
 
   #################################################
   
+  #Геттеры и сеттеры
+  
   attr_accessor :id, :git
+  
+  #################################################
   
   #Инициализация
   
@@ -17,7 +21,7 @@ class BaseStudent
 	@git = git
   end
   
-  #Наличие гита
+  #Наличие гита и приведение к типам
   
   def has_git?
     !@git.nil?
@@ -36,7 +40,7 @@ class BaseStudent
   end
   
   def get_info
-    raise NotImplementedError, "Метод to_s должен быть реализован"
+    raise NotImplementedError, "Метод get_info должен быть реализован"
   end
   
   def to_s

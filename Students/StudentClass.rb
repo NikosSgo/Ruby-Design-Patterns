@@ -2,8 +2,27 @@ require_relative "BaseStudent"
 require "json"
 
 class Student < BaseStudent
-  attr_accessor :surname, :name, :patronymic	
+
+  #################################################
+  
+  # Геттеры и сеттеры
+  
   attr_reader :phone, :telegram, :email
+
+  def surname=(surname)
+    validate_attributes(binding)
+	@surname = surname
+  end
+  
+  def name=(name)
+    validate_attributes(binding)
+	@name = name
+  end
+  
+  def patronymic=(patronymic)
+    validate_attributes(binding)
+	@patronymic = patronymic
+  end
 
   #################################################
   
