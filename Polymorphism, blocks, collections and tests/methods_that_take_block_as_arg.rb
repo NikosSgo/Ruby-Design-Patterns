@@ -37,4 +37,17 @@ class MyArray
 	array
   end
   
+  def my_max_by()
+    max_yield = nil
+    max = nil
+	for i in 0...@array.length do
+	  current_value = yield(@array[i])
+	  if max_yield.nil? ||  current_value > max_yield then
+	    max_yield = current_value
+		max = @array[i]
+	  end
+	end
+	max
+  end
+  
 end
