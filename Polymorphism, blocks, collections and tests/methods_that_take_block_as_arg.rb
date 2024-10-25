@@ -50,6 +50,18 @@ class MyArray
 	max
   end
   
+  def my_each_slice(slice)
+	cur_slice = []
+	for i in 0...@array.length do
+	  if cur_slice.length == slice then
+	    yield(cur_slice) 
+		cur_slice = []
+	  end
+	  cur_slice << @array[i]
+	end
+	yield(cur_slice) if cur_slice
+  end
+  
   def my_sort_by()
     new_arr = []
 	for i in 0...@array.length do
