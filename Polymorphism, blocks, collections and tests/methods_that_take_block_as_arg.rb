@@ -29,4 +29,12 @@ class MyArray
 	value
   end
   
+  def my_reject()
+    array = []
+	for i in 0...@array.length do 
+	  array << @array[i] if !yield(@array[i])
+	end
+	array
+  end
+  
 end
