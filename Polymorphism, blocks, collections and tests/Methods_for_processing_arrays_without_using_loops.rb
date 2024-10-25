@@ -25,10 +25,10 @@ def arithmetic_mean_abs_el_array(array)
   array.map(&:abs).sum.to_f/array.length
 end
 
-def array_with_el_bigger_arith_mean_less_max_el(array)
+def select_el_bigger_arith_mean_less_max_el(array)
   max = array.max
-  arith = (array.sum.to_f/array.length).ceil
-  array.map { rand(arith..max)}
+  arith = array.sum.to_f/array.length
+  array.select {|el| el>arith && el<max}
 end
 
 def keyboard_input_array
@@ -48,7 +48,7 @@ def keyboard_input_method_and_array
   puts "2) swap_min_and_max_el(array)"
   puts "3) contains_max_element_in_interval?(array,range)"
   puts "4) arithmetic_mean_abs_el_array(array)"
-  puts "5) array_with_el_bigger_arith_mean_less_max_el(array)"
+  puts "5) select_el_bigger_arith_mean_less_max_el(array)"
   puts "Введите число от 1 до 5:"
   method = gets.chomp
   case method
@@ -72,7 +72,7 @@ def keyboard_input_method_and_array
 	  return arithmetic_mean_abs_el_array(array)
 	when "5"
 	  array = keyboard_input_array
-	  return array_with_el_bigger_arith_mean_less_max_el(array)
+	  return select_el_bigger_arith_mean_less_max_el(array)
 	else
 	  puts "Ввод чисел только от 1 до 5!"
   end
@@ -86,7 +86,7 @@ def read_method_and_array_from_file(file_name)
 	return swap_min_and_max_el(hash["array"]) if hash["method"] == 2
     return contains_max_element_in_interval?(hash["array"],eval(hash["range"])) if hash["method"] == 3
 	return arithmetic_mean_abs_el_array(hash["array"]) if hash["method"] == 4
-	return array_with_el_bigger_arith_mean_less_max_el(hash["array"]) if hash["method"] == 5
+	return select_el_bigger_arith_mean_less_max_el(hash["array"]) if hash["method"] == 5
 	"Номер метода - число от 1 до 5!" if hash["method"] > 5 || hash["method"] < 1
   end
 end
