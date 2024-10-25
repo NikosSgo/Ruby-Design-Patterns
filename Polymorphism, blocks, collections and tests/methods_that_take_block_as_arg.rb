@@ -50,4 +50,23 @@ class MyArray
 	max
   end
   
+  def my_sort_by()
+    new_arr = []
+	for i in 0...@array.length do
+	  new_arr << {original: @array[i], yield: yield(@array[i])}
+	end
+	for i in 0...new_arr.length do
+	  for j in i...new_arr.length do
+	    if new_arr[j][:yield] < new_arr[i][:yield]
+		   temp = new_arr[j]
+		   new_arr[j] = new_arr[i]
+		   new_arr[i] = temp
+        end		
+	  end
+	end
+	for i in 0...new_arr.length do
+	  new_arr[i] = new_arr[i][:original]
+	end
+	new_arr
+  end
 end
