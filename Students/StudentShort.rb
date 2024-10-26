@@ -5,17 +5,12 @@ class StudentShort < BaseStudent
   
   #################################################
   
-  #Геттеры и сеттеры
+  #Геттеры и сеттеры	
   
   attr_reader :surname_and_initials, :contact
   
-  private def id
-    @id
-  end
   
-  private def git
-    @git
-  end
+  private attr_writer :id, :git
   
   #################################################
   

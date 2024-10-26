@@ -1,5 +1,6 @@
 require_relative "BaseStudent"
 require "json"
+require "date"
 
 class Student < BaseStudent
 
@@ -7,7 +8,7 @@ class Student < BaseStudent
   
   # Геттеры и сеттеры
   
-  attr_reader :phone, :telegram, :email
+  attr_reader :surname, :name, :patronymic, :birth_date, :phone, :telegram, :email
 
   def surname=(surname)
     validate_attributes(binding)
@@ -28,7 +29,7 @@ class Student < BaseStudent
   
   # Инициализаторы
   
-  def initialize(surname:, name:, patronymic:, id: nil, phone: nil, telegram: nil, email: nil, git: nil)
+  def initialize(surname:, name:, patronymic:, birth_date:, id: nil, phone: nil, telegram: nil, email: nil, git: nil)
     validate_attributes(binding)
     
     super(id: id, git: git)
@@ -37,13 +38,24 @@ class Student < BaseStudent
     @patronymic = patronymic
     @phone = phone
     @telegram = telegram
+	@birth_date = birth_date
     @email = email
     @git = git
   end
   
   def self.from_json(json)
     hash = JSON.parse(json)
-	Student.new(surname: hash["surname"], name: hash["name"], patronymic: hash["patronymic"], id: hash["id"],phone: hash["phone"], telegram: hash["telegram"], email: hash["email"], git: hash["git"])
+	Student.new(
+	surname: hash["surname"], 
+	name: hash["name"], 
+	patronymic: hash["patronymic"], 
+	birth_date: hash["birth_date"], 
+	id: hash["id"],
+	phone: hash["phone"], 
+	telegram: hash["telegram"],
+	email: hash["email"], 
+	git: hash["git"]
+	)
   end
 
   #################################################
@@ -106,6 +118,7 @@ class Student < BaseStudent
       surname: @surname,
 	  name: @name,
 	  patronymic: @patronymic,
+	  birth_date: @birth_date,
 	  phone: @phone,
 	  email: @email,
 	  telegram: @telegram,
@@ -117,7 +130,7 @@ class Student < BaseStudent
   end
   
   def to_s
-    str = "surname: #{@surname}, name: #{@name}, patronymic: #{@patronymic}"
+    str = "surname: #{@surname}, name: #{@name}, patronymic: #{@patronymic}, birth_date: #{birth_date}"
     str += ", id: #{@id}" if @id
     str += ", phone: #{@phone}" if @phone
     str += ", telegram: #{@telegram}" if @telegram
@@ -168,5 +181,11 @@ class Student < BaseStudent
     end
   end
 
+  #################################################
+  
+  # Метод для сравнения студентов по дате рождения
+  def <=>(other)
+    @birth_date <=> other.birth_date
+  end
   
 end
