@@ -1,4 +1,4 @@
-module StudentValidator
+module StudentValidatorHelper
 
   VALIDATIONS = {
     surname: ->(value) { valid_full_name?(value) },
@@ -10,27 +10,26 @@ module StudentValidator
     email: ->(value) { value.nil? || valid_email?(value) },
     git: ->(value) { value.nil? || valid_git?(value) },
     contact: ->(value) { value.nil? || valid_contact?(value) },
-	birth_date: ->(value) {valid_date?(value) && valid_date_values?(value)}
+    birth_date: ->(value) { valid_date?(value) && valid_date_values?(value) }
   }
   
-  protected def validate_attributes(binding, validations = VALIDATIONS)
-    
-    method_name = binding.eval('__method__')
-	args = method(method_name).parameters.map { |_, name| [name, binding.local_variable_get(name)] }.to_h
-	errors = []
-	  
-	args.each do |key, value|
-	  validation = VALIDATIONS[key]
-	  if !validation.nil?
-	    unless validation.call(value)
-		  errors << "Неверный аргумент: #{key} = #{value}"
-		end
-	  end
-	end
+  def validate_attributes(kwargs, validations = VALIDATIONS)
+    errors = []
 
-	raise ArgumentError, errors.join(", ") unless errors.empty?
+    kwargs.each do |key, value|
+      unless valid_arg?(key, value)
+        errors << "Неверный аргумент: #{key} = #{value}"
+      end
+    end
+
+    raise ArgumentError, errors.join(", ") unless errors.empty?
   end
   
+  def valid_arg?(arg_name, arg_value)
+    validation = VALIDATIONS[arg_name]
+    validation ? validation.call(arg_value) : true
+  end
+
   def self.valid_full_name?(full_name)
     full_name =~ /\A[A-ZА-ЯЁ][a-zа-яё]+\z/
   end
@@ -57,28 +56,25 @@ module StudentValidator
   
   def self.valid_contact?(contact)
     return true if contact.nil?
-    
+
     contact.is_a?(Hash) &&
-    (contact[:phone].nil? || valid_phone?(contact[:phone])) &&
-    (contact[:email].nil? || valid_email?(contact[:email])) &&
-    (contact[:telegram].nil? || valid_telegram?(contact[:telegram]))
+      (contact[:phone].nil? || valid_phone?(contact[:phone])) &&
+      (contact[:email].nil? || valid_email?(contact[:email])) &&
+      (contact[:telegram].nil? || valid_telegram?(contact[:telegram]))
   end
-  
+
   def self.valid_date?(date)
     date =~ /^\d{4}-\d{2}-\d{2}$/
   end
-  
+
   def self.valid_date_values?(date)
     year, month, day = date.split('-').map(&:to_i)
     return false if year < 1900 || year > 2100
     return false if month < 1 || month > 12
     return false if day < 1 || day > 31
-    
-	leap_year = 0
-	leap_year+=1 if year%4==0
-    days_in_month = [31, 28 + leap_year, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    day <= days_in_month[month-1]
+
+    leap_year = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
+    days_in_month = [31, 28 + (leap_year ? 1 : 0), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    day <= days_in_month[month - 1]
   end
-
 end
-

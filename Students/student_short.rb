@@ -1,4 +1,4 @@
-require_relative "BaseStudent"
+require_relative "base_student"
 require "json"
 
 class StudentShort < BaseStudent
@@ -7,31 +7,35 @@ class StudentShort < BaseStudent
   
   #Геттеры и сеттеры	
   
-  attr_reader :surname_and_initials, :contact
+  attr_reader :contact
   
+  private :id=, :git=
   
-  private attr_writer :id, :git
+  private_class_method :new
   
   #################################################
   
   # Инициализаторы
   
-  private def initialize(surname_and_initials, id = nil, git = nil, contact = nil)
-    validate_attributes(binding)
-    
+  def initialize(surname_and_initials:, id: nil, git: nil, contact: nil)
 	super(id: id, git: git)
     @surname_and_initials = surname_and_initials
     @contact = contact
   end
+    
+  def self.from_json(json)
+    hash  = JSON.parse(json)
+    new(surname_and_initials: hash["surname_and_initials"], id: hash["id"], git: hash["git"], contact: hash["contact"])
+  end
   
   def self.from_info(id: nil, info: nil)
     hash  = JSON.parse(info)
-    StudentShort.new(hash["surname_and_initials"], id, hash["git"], hash["contact"])
+    new(surname_and_initials: hash["surname_and_initials"], id: id, git: hash["git"], contact: hash["contact"])
   end
   
   def self.from_student(student)
     if !student.nil?
-      StudentShort.new(student.surname_and_initials, student.id, student.git, student.get_contacts[0])
+      new(surname_and_initials: student.surname_and_initials, id: student.id, git: student.git, contact: student.get_contacts[0])
     else
       raise ArgumentError, "Student can not be nil!"
     end
@@ -63,4 +67,6 @@ class StudentShort < BaseStudent
     end
     s += "."
   end
+  
+  valid_methods :initialize
 end

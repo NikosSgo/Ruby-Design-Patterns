@@ -1,6 +1,5 @@
-require_relative "BaseStudent"
+require_relative "base_student"
 require "json"
-require "date"
 
 class Student < BaseStudent
 
@@ -8,30 +7,14 @@ class Student < BaseStudent
   
   # Геттеры и сеттеры
   
-  attr_reader :surname, :name, :patronymic, :birth_date, :phone, :telegram, :email
-
-  def surname=(surname)
-    validate_attributes(binding)
-	@surname = surname
-  end
+  attr_reader :birth_date, :phone, :telegram, :email
+  valid_attr_accessor :surname, :name, :patronymic
   
-  def name=(name)
-    validate_attributes(binding)
-	@name = name
-  end
-  
-  def patronymic=(patronymic)
-    validate_attributes(binding)
-	@patronymic = patronymic
-  end
-
   #################################################
   
   # Инициализаторы
   
   def initialize(surname:, name:, patronymic:, birth_date:, id: nil, phone: nil, telegram: nil, email: nil, git: nil)
-    validate_attributes(binding)
-    
     super(id: id, git: git)
     @surname = surname
     @name = name
@@ -75,7 +58,6 @@ class Student < BaseStudent
   #Геттер и сеттер для всех контактов одновременно контактов
   
   def set_contacts(phone: nil, telegram: nil, email: nil)
-    validate_attributes(binding)
     @phone = phone if !phone.nil?
     @telegram = telegram if !telegram.nil?
     @email = email if !email.nil?
@@ -92,10 +74,6 @@ class Student < BaseStudent
   #################################################
   
   #Метод get_info
-  
-  def surname_and_initials
-    "#{@surname} #{@name[0]}.#{@patronymic[0]}."
-  end
   
   private def to_short_hash
 	{
@@ -138,48 +116,6 @@ class Student < BaseStudent
     str += ", git: #{@git}" if @git
     str
   end
-  
-  #################################################
-  
-  #Чтение, запись с файла
-  
-  def self.read_from_txt(file_name)
-    begin
-      array = File.open(file_name, "r") do |file|
-        file.readlines.map do |line|
-          begin
-            self.from_json(line.strip)
-          rescue JSON::ParserError => e
-            nil 
-		  end
-        end
-	  end
-      return array.compact
-    end
-    rescue Errno::ENOENT => e
-      puts "Ошибка: Файл не найден - #{e.message}"
-	  return []
-    rescue Errno::EACCES => e
-      puts "Ошибка: Доступ запрещен - #{e.message}"
-	  return []
-    rescue StandardError => e
-      puts "Произошла ошибка - #{e.message}"
-	  return []
-  end
-
-  def self.write_to_txt(students, file_name)
-    begin
-      File.open(file_name, "w") do |file|
-        students.each do |student|
-          file.puts(student.to_json)
-        end
-      end
-    rescue Errno::EACCES => e
-      puts "Ошибка: Доступ запрещен - #{e.message}"
-    rescue StandardError => e
-        puts "Произошла ошибка при записи в файл - #{e.message}"
-    end
-  end
 
   #################################################
   
@@ -187,5 +123,11 @@ class Student < BaseStudent
   def <=>(other)
     @birth_date <=> other.birth_date
   end
+  
+  #################################################
+  
+  # Валидация
+  
+  valid_methods :set_contacts, :initialize
   
 end

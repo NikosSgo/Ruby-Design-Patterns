@@ -1,7 +1,7 @@
 require "json"
-require_relative "StudentClass"
-require_relative "StudentShort"
-require_relative "BinarySearchTree"
+require_relative "student"
+require_relative "student_short"
+require_relative "binary_search_tree"
 
 first_student = Student.new(
   surname: "Сгонниик", 
@@ -47,21 +47,6 @@ file_dir = "StudentsArray.txt"
 # Читаем массив студентов из файла
 students_array = Student.read_from_txt(file_dir)
 
-puts "Массив студентов, полученный из файла #{file_dir}\n\n"
-
-students_array.each_with_index do |student, index|
-  puts "#{index+1}) #{student.to_s}"
-end
-
-# Обновляем контакты второго студента в массиве
-students_array[1].set_contacts(email: "Sido@gmail.com")
-
-# Записываем обновленный массив студентов обратно в файл
-Student.write_to_txt(students_array, "StudentsArray.txt")
-
 binary_tree = BinarySearchTree.new()
 
-
 students_array.each {|student| binary_tree.add(student)}
-
-puts "Двоичное сортированное дерево студентов:\n#{binary_tree.to_hash}"
