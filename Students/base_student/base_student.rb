@@ -1,5 +1,6 @@
-require_relative "student_validator"
-require_relative "student_validator_helper"
+require_relative "../student_validator/student_validator"
+require_relative "../student_validator/student_validator_helper"
+
 class BaseStudent
 
   extend StudentValidator
@@ -23,7 +24,7 @@ class BaseStudent
   
   def initialize(id: nil, git: nil)
     @id = id
-	@git = git
+	  @git = git
   end
   
   #Наличие гита и приведение к типам
@@ -53,7 +54,7 @@ class BaseStudent
   
   #################################################
   
-  #Чтение, запись с файла
+  #Чтение, запись с txt
   
   def self.read_from_txt(file_name)
     begin

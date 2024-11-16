@@ -1,4 +1,4 @@
-require_relative "base_student"
+require_relative "../base_student/base_student"
 require "json"
 
 class StudentShort < BaseStudent
@@ -31,7 +31,7 @@ class StudentShort < BaseStudent
   def self.from_info(id: nil, info: nil)
     hash  = JSON.parse(info)
     new(surname_and_initials: hash["surname_and_initials"], id: id, git: hash["git"], contact: hash["contact"])
-  end
+  end	
   
   def self.from_student(student)
     if !student.nil?

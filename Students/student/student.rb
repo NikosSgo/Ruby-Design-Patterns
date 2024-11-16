@@ -1,4 +1,4 @@
-require_relative "base_student"
+require_relative "../base_student/base_student"
 require "json"
 
 class Student < BaseStudent

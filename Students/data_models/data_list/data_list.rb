@@ -1,4 +1,11 @@
+require_relative  "data_table"
+
 class DataList
+
+  def data(data)
+    @elements = data
+  end
+  
   def initialize(elements)
     @elements = elements.map(&:freeze).freeze
     @selected = []
@@ -19,21 +26,11 @@ class DataList
   end
 
   def get_data
-    raise NotImplementedError, "Этот метод должен быть реализован в наследниках"
-  end
-
-  protected
-
-def generate_table_data(elements)
-    names = get_names
     table = []
-
     elements.each_with_index do |element, index|
-      row = [index + 1]
-      row += names.map { |name| element[name] }
-      table << row
+      table << data_row(id,element)
     end
-
-    table
+    DataTable.new(table)
   end
+  
 end

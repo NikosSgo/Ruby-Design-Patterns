@@ -1,7 +1,7 @@
 require "json"
-require_relative "student"
-require_relative "student_short"
-require_relative "binary_search_tree"
+require_relative "student/student"
+require_relative "student_short/student_short"
+require_relative "binary_search_tree/binary_search_tree"
 
 first_student = Student.new(
   surname: "Сгонниик", 
