@@ -32,7 +32,7 @@ puts "\nДанные второго студента после изменени
 puts "\nИнформация о первом студенте, полученная через get_info: #{first_student.get_info}"
 
 # Создаем объекты StudentShort
-first_student_short = StudentShort.from_info(id: "2", info: '{"surname_and_initials":"Сгонниик Н.С.","git":"https://github.com/NikosSgo","contact":{"phone":"89286341261"}}')
+first_student_short = StudentShort.from_info(id: "2", info: "surname_and_initials:Сгонниик Н.С.,git=https://github.com/NikosSgo,contact=89286341261")
 second_student_short = StudentShort.from_student(second_student)
 
 puts "\nStudentShort, полученный через id и info: #{first_student_short.get_info}"

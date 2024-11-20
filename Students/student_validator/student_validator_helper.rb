@@ -9,7 +9,7 @@ module StudentValidatorHelper
     telegram: ->(value) { value.nil? || valid_telegram?(value) },
     email: ->(value) { value.nil? || valid_email?(value) },
     git: ->(value) { value.nil? || valid_git?(value) },
-    contact: ->(value) { value.nil? || valid_contact?(value) },
+    contact: ->(value) { value.nil? || valid_phone?(value) || valid_email?(value) || valid_telegram?(value) },
     birth_date: ->(value) { valid_date?(value) && valid_date_values?(value) }
   }
   
@@ -52,15 +52,6 @@ module StudentValidatorHelper
 
   def self.valid_telegram?(telegram)
     telegram =~ /\A\@[a-zA-Z0-9_]{5,32}\z/
-  end
-  
-  def self.valid_contact?(contact)
-    return true if contact.nil?
-
-    contact.is_a?(Hash) &&
-      (contact[:phone].nil? || valid_phone?(contact[:phone])) &&
-      (contact[:email].nil? || valid_email?(contact[:email])) &&
-      (contact[:telegram].nil? || valid_telegram?(contact[:telegram]))
   end
 
   def self.valid_date?(date)

@@ -9,6 +9,9 @@ class Student < BaseStudent
   
   attr_reader :birth_date, :phone, :telegram, :email
   valid_attr_accessor :surname, :name, :patronymic
+  def surname_and_initials
+    "#{surname} #{name[0]}.#{patronymic[0]}."
+  end
   
   #################################################
   
@@ -63,28 +66,18 @@ class Student < BaseStudent
     @email = email if !email.nil?
   end
 
-  def get_contacts
+  def contact
     contacts = []
-	contacts << {phone: @phone} if @phone
-    contacts << {email: @email} if @email
-    contacts << {telegram: @telegram} if @telegram
-    contacts
+	  contacts << {@phone} if @phone
+    contacts << {@email} if @email
+    contacts << {@telegram} if @telegram
+    contacts[0]
   end
   
   #################################################
-  
-  #Метод get_info
-  
-  private def to_short_hash
-	{
-      surname_and_initials: surname_and_initials,
-      git: @git,
-      contact: get_contacts[0]
-    }
-  end
-	
+
   def get_info
-    to_short_hash.to_json
+    "surname_and_initials=#{surname_and_initials},surname_and_initials=#{git},contact=#{contact}"
   end
   
   #################################################
@@ -93,7 +86,7 @@ class Student < BaseStudent
 
   def to_hash
     super.merge({
-      surname: @surname,
+    surname: @surname,
 	  name: @name,
 	  patronymic: @patronymic,
 	  birth_date: @birth_date,
@@ -109,11 +102,11 @@ class Student < BaseStudent
   
   def to_s
     str = "surname: #{@surname}, name: #{@name}, patronymic: #{@patronymic}, birth_date: #{birth_date}"
-    str += ", id: #{@id}" if @id
-    str += ", phone: #{@phone}" if @phone
-    str += ", telegram: #{@telegram}" if @telegram
-    str += ", email: #{@email}" if @email
-    str += ", git: #{@git}" if @git
+    str += ", id: #{@id}"
+    str += ", phone: #{@phone}"
+    str += ", telegram: #{@telegram}"
+    str += ", email: #{@email}"
+    str += ", git: #{@git}"
     str
   end
 
