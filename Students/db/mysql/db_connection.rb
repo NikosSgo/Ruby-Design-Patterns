@@ -8,10 +8,11 @@ class DBConnection
   def self.instance
     @client ||= Mysql2::Client.new(
       host: 'localhost',
-      username: 'root',
-      password: '1234',
+      username: 'nikos',
+      password: '123',
       database: 'students'
     )
     @client
   end
 end
+ 

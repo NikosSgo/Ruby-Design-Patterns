@@ -1,13 +1,17 @@
 ---
-- :id: '1'
-  :git: https://github.com/NikosSgo
-  :surname_and_initials: Сгонниик Н.С.
-  :contact: '89286341261'
-- :id: '2'
-  :git: https://github.com/BigNikita2005
-  :surname_and_initials: Григоренко Н.А.
-  :contact: '89281332214'
-- :id: '3'
+- :id: 3
   :git: https://github.com/BachIvan
   :surname_and_initials: Бачурин И.А.
   :contact: '89331246944'
+- :id: 2
+  :git: https://github.com/BigNikita2005
+  :surname_and_initials: Григоренко Н.А.
+  :contact: '89281332214'
+- :id: 4
+  :git: https://github.com/XMaxchel
+  :surname_and_initials: Небывалов М.В.
+  :contact: '89113213355'
+- :id: 1
+  :git: https://github.com/NikosSgo
+  :surname_and_initials: Сгонниик Н.С.
+  :contact: '89286341261'

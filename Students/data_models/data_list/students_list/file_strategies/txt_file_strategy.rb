@@ -5,18 +5,16 @@ class TxtFileStrategy < BaseFileStrategy
 
   def from_file(str)
     str_students = str.split(";\n")
-    id_and_info_students = str_students.map do |str|
-      parts = str.split(",", 2)
-      {
-        id:parts[0].split("=")[1],
-        info:parts[1]
-      }
+    students_hash = str_students.map do |str|
+      students_hash.split(",").map {|arg| arg.split("=")}.to_h
     end
+    students_hash
   end
   
   def to_file(elements)
     strings = elements.map {|el| el.to_s + ";\n"}
     str = strings.inject {|acc,str| acc + str}
+    str
   end
 
 end

@@ -1,74 +1,37 @@
-require_relative "../student_short/data_list_student_short"
-require_relative "../../../student_short/student_short"
-require_relative "file_strategies/file_strategies"
+require_relative "storages/storage_interface"
 
-class StudentsList < DataListStudentShort
+class StudentsList
 
-  def strategy(strategy)
-    @strategy = strategy
+  attr_writer :storage
+
+  def initialize(storage)
+    raise ArgumentError, "Expected child of StorageInterface" if !storage.is_a?(StorageInterface)
+    @storage = storage
   end
 
-  def initialize(strategy,students = [])
-    @strategy = strategy
-    super(students)
-  end
 
-  def read_all(file_name)
-    @strategy.read(file_name)
-  end
-
-  def read_from_file!(file_name)
-    students = @strategy.read(file_name)
-    @elements = students
-  end
-
-  def write_to_file(file_name)
-    @strategy.write(file_name,elements)
-  end
-
-  def sort
-    elements.sort_by(&:surname_and_initials)
-  end
-  
-  def sort!
-    elements.sort_by!(&:surname_and_initials)
-  end
-
-  ########################################################
-
-  def get_k_n_students(k,n,data_list = nil)
-    raise ArgumentError, 'Неверные значения k или n' if k < 0 || n < 1 || k*n >= @elements.size
-    elements = []
-    for i in k*n...k*n+n do
-      select(i)
-    end
-    elements = selected
-    clear_selected
-    data_list.nil? ? DataListStudentShort.new(elements) : data_list.elements = elements 
-
+  def get_k_n_list(k,n,data_list = nil)
+    @storage.get_k_n_list(k,n,data_list)
   end
 
   def get_by_id(id)
-    select(id)
-    element = selected[0]
-    clear_selected
-    element
+    @storage.get_by_id(id)
   end
 
   def delete_by_id(id)
-    elements.delete_at(id)
+    @storage.delete_by_id(id)
   end
 
   def update_by_id(id,student)
-    elements[id] = student
+    @storage.update_by_id(id,student)
   end
 
   def get_students_count
-    elements.length
+    @storage.get_students_count
   end
 
   def add(student)
-    elements.append(student)
+    @storage.add(student)
   end
 
 end
