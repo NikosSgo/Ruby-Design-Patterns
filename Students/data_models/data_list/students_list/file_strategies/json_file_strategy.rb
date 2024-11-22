@@ -3,13 +3,10 @@ require "json"
 
 class JsonFileStrategy < BaseFileStrategy
 
+  private
+
   def from_file(json)
-    JSON.parse(json,symbolize_names: true).map do |hash|
-      {
-        id: hash[:id],
-        info: "surname_and_initials=#{hash[:surname_and_initials]},git=#{hash[:git]},contact=#{hash[:contact]}",
-      }
-    end
+    JSON.parse(json,symbolize_names: true)
   end
   
   def to_file(elements)

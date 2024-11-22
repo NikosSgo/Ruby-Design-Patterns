@@ -17,10 +17,10 @@ class Tag
   
   private def initialize(name,props,childs,type,text)
     @name = name
-	@props = props
-	@childs = childs
-	@type = type
-	@text = text
+	  @props = props
+	  @childs = childs
+	  @type = type
+	  @text = text
   end
   
   def add_child(tag)
@@ -34,15 +34,14 @@ class Tag
    
   def depth_first_search(&block)
     block.call(self)
-	@childs.each {|child| child.depth_first_search(&block)} if @childs
+	  @childs.each {|child| child.depth_first_search(&block)} if @childs
   end
   
   def has_class?(class_name)
-	  return false if props.nil?
+    return false if props.nil?
 	  return false if props[:class].nil?
-	  classes = props[:class].split
-	  puts "классы - #{classes}"
-	  return classes.contains(class_name) ? true : false
+    classes = props[:class].split
+	  return classes.member?(class_name) ? true : false
   end
   
   def breadth_first_search(&block)
@@ -60,16 +59,16 @@ class Tag
     elsif @type == "default_tag"
       result = "<#{@name}"
       @props.each { |key, value| result += " #{key}=#{'"' + value + '"'}" }
-	  result += ">"
-	  @childs.each { |child| result += child.to_html_without_indent }
-	  result += "</#{@name}>"
+	    result += ">"
+	    @childs.each { |child| result += child.to_html_without_indent }
+	    result += "</#{@name}>"
       result
-	elsif @type == "self_closing_tag"
-	  result = "<#{@name}"
-	  @props.each { |key, value| result += " #{key}=#{'"' + value + '"'}" }
-	  result += "/>"
-	  result
-	end
+    elsif @type == "self_closing_tag"
+      result = "<#{@name}"
+      @props.each { |key, value| result += " #{key}=#{'"' + value + '"'}" }
+      result += "/>"
+      result
+    end
   end
   
   def to_html(indent_level = 0,indent = "  ")
@@ -100,8 +99,8 @@ class Tag
       props: @props,
       text: @text,
     }
-	@childs ? hash[:childs] = @childs.map(&:to_hash) : hash[:childs] = @childs
-	hash
+    @childs ? hash[:childs] = @childs.map(&:to_hash) : hash[:childs] = @childs
+    hash
   end
   
   def to_s

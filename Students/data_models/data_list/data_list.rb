@@ -4,16 +4,25 @@ require_relative "../deep_dup/deep_dup"
 class DataList
   include DeepDup
 
-  attr_accessor :elements
+  attr_writer :elements
 
-  def initialize(elements)
+  def elements
+    for i in 0...@elements.length do
+      select(i)
+    end
+    sel_el = selected
+    clear_selected
+    sel_el
+  end
+
+  def initialize(elements = [])
     @elements = elements
     @selected = []
   end
 
   def select(number)
-    raise ArgumentError, 'Invalid index' unless  number >= 0 && number < elements.size
-    @selected << elements[number] unless @selected.include?(elements[number])
+    raise ArgumentError, 'Invalid index' unless  number >= 0 && number < @elements.size
+    @selected << @elements[number] unless @selected.include?(@elements[number])
   end
 
   def selected
@@ -30,7 +39,7 @@ class DataList
 
   def get_data
     table = []
-    elements.each_with_index do |element, index|
+    @elements.each_with_index do |element, index|
       table << data_row(index+1,element)
     end
     DataTable.new(table)

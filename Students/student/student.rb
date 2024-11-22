@@ -3,6 +3,8 @@ require "json"
 
 class Student < BaseStudent
 
+  include Comparable 
+  
   #################################################
   
   # Геттеры и сеттеры
@@ -24,7 +26,7 @@ class Student < BaseStudent
     @patronymic = patronymic
     @phone = phone
     @telegram = telegram
-	@birth_date = birth_date
+	  @birth_date = birth_date
     @email = email
     @git = git
   end
@@ -68,9 +70,9 @@ class Student < BaseStudent
 
   def contact
     contacts = []
-	  contacts << {@phone} if @phone
-    contacts << {@email} if @email
-    contacts << {@telegram} if @telegram
+	  contacts << @phone if @phone
+    contacts << @email if @email
+    contacts << @telegram if @telegram
     contacts[0]
   end
   

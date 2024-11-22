@@ -20,8 +20,8 @@ class HtmlTree
       hash[:open_tag] = arr[0] if arr[0]    			# Открывающий тег
       hash[:props] = arr[1] if arr[1]       			# Атрибуты открывающего тега
       hash[:close_tag] = arr[2] if arr[2]   			# Закрывающий тег
-	  hash[:text_node] = arr[3] if arr[3]        		# Текстовый узел
-	  hash[:self_closing_tag] = arr[4] if arr[4]        # Самозакрывающийся тег
+	    hash[:text_node] = arr[3] if arr[3]        	# Текстовый узел
+	    hash[:self_closing_tag] = arr[4] if arr[4]  # Самозакрывающийся тег
       hash
     end
     
@@ -57,8 +57,8 @@ class HtmlTree
     return {} unless props_str
     
     props = {}
-    props_str.scan(/(\w+)="([^"]*)"/).each do |key, value|
-      props[key] = value
+    props_str.scan(/(\w+)\s*=\s*"([^"]*)"/).each do |key, value|
+      props[key.to_sym] = value
     end
     props
   end
@@ -87,13 +87,3 @@ class HtmlTree
     @root.to_json
   end
 end
-
-parsed_tree = HtmlTree.from_html('<html><body><div class="flex flex-col"><div>ssss</div></div><div color="red"></div><input/></body><footer></footer></html>')
-
-puts "parsed_html to_html:\n\n#{parsed_tree.to_html}"
-
-puts "\nparsed_html to_json:\n\n#{parsed_tree.to_json}"
-
-puts "\nВсе div в html:\n\n"
-
-parsed_tree.select {|value| value.name == "div"}.each_with_index {|value,index| puts "#{index+1})#{value.to_html_without_indent}\n\n"}

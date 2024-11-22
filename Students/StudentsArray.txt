@@ -1,3 +1,0 @@
-{"id":null,"git":"https://github.com/NikosSgo","surname":"Сгонниик","name":"Николай","patronymic":"Сергеевич","birth_date":"2004-05-12","phone":"89286341261","email":null,"telegram":null}
-{"id":null,"git":"https://github.com/olegS","surname":"Сидоров","name":"Олег","patronymic":"Игоревич","birth_date":"1999-10-03","phone":"89123456789","email":"Sido@gmail.com","telegram":null}
-{"id":null,"git":null,"surname":"Кузнецов","name":"Никита","patronymic":"Александрович","birth_date":"2000-01-15","phone":null,"email":null,"telegram":"@kuznetsov_na"}

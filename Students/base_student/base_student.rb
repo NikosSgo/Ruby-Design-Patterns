@@ -12,8 +12,13 @@ class BaseStudent
   
   attr_accessor :id
   valid_attr_accessor :git
+
   def surname_and_initials
-    raise NotImplementedError, "Геттер surname_and_initials должен быть реализован"
+    raise NotImplementedError, "Геттер surname_and_initials должен быть реализован."
+  end
+
+  def contact
+    raise NotImplementedError, "Геттер contact должен быть реализован."
   end
   
   #################################################
