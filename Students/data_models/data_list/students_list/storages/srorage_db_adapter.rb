@@ -7,8 +7,8 @@ class StorageDBAdapter < StorageInterface
     @storage_adapter = students_list_db
   end
 
-  def get_k_n_list(k,n,data_list = nil)
-    @storage_adapter.get_k_n_list_in_db(k,n,data_list)
+  def get_k_n_list(k,n,data_list = nil,filter: nil)
+    @storage_adapter.get_k_n_list_in_db(k,n,data_list,filter: filter)
   end
 
   def get_by_id(id)
@@ -24,8 +24,8 @@ class StorageDBAdapter < StorageInterface
     @storage_adapter.update_by_id_in_db(id,student)
   end
 
-  def get_students_count
-    @storage_adapter.count_students_in_db
+  def get_students_count(filter = nil)
+    @storage_adapter.count_students_in_db(filter)
   end
 
   def add(student)

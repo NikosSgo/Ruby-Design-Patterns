@@ -25,7 +25,11 @@ class DataTable
     for i in 0...row_count do
       s = ""
       for j in 0...column_count do
-        s+="#{get_element(i,j)} "
+        if get_element(i,j) then
+          s+="#{get_element(i,j)} " 
+        else
+          s+="nil "
+        end
       end
       puts s
     end

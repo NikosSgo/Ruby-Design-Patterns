@@ -6,9 +6,13 @@ class TxtFileStrategy < BaseFileStrategy
   def from_file(str)
     str_students = str.split(";\n")
     students_hash = str_students.map do |str|
-      students_hash.split(",").map {|arg| arg.split("=")}.to_h
+      str.split(",").map do |arg| 
+        arg = arg.split("=")
+        arg[1] = nil if arg[1] == 'nil'
+        arg
+      end
     end
-    students_hash
+    students_hash.to_h
   end
   
   def to_file(elements)

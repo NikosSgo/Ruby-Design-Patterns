@@ -35,19 +35,6 @@ class StudentsListFS
 
   ########################################################
 
-  def get_k_n_list_in_file(k,n,other_data_list = nil)
-    students_count = count_students_in_file
-    raise ArgumentError, 'Неверные значения k или n, k >=1, n >= 1' if k < 1 || n < 1 || (k-1)*n >= students_count
-    elements = []
-    for i in (k-1)*n...(k-1)*n+n do
-      @data_list.select(i)
-    end
-    elements = @data_list.selected
-    @data_list.clear_selected
-    other_data_list.nil? ? @data_list.elements = elements : other_data_list.elements = elements 
-
-  end
-
   def get_by_id_in_file(id)
     read_all_in_file!
     @data_list.elements.select {|el| el.id == id}
@@ -68,15 +55,32 @@ class StudentsListFS
     write_in_file
   end
 
-  def count_students_in_file
-    read_all_in_file!
-    @data_list.elements.length
-  end
-
   def add_in_file(student)
     read_all_in_file!
     @data_list.elements = @data_list.elements.append(student)
     write_in_file
+  end
+
+
+  def get_k_n_list_in_file(k, n, other_data_list = nil, filter: nil)
+    students_count = count_students_in_file
+    raise ArgumentError, 'Неверные значения k или n, k >=1, n >= 1' if k < 1  || n < 1  || (k - 1) * n >= students_count
+
+    read_all_in_file!
+    elements = filter ? filter.apply(@data_list.elements) : @data_list.elements
+
+    paginated_elements = elements[(k - 1) * n, (k - 1) * n + n]
+
+    if other_data_list
+      other_data_list.elements = paginated_elements
+    else
+      DataListStudentShort.new(paginated_elements)
+    end
+  end
+
+  def count_students_in_file(filter = nil)
+    read_all_in_file!
+    filter ? filter.apply(@data_list.elements).size : @data_list.elements.size
   end
 
 end

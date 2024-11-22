@@ -22,7 +22,12 @@ class StudentShort < BaseStudent
   end
   
   def self.from_info(id: nil, info: nil)
-    hash = info.split(",").map {|value| value.split("=")}.to_h
+    hash = info.split(",").map do |value| 
+      value = value.split("=")
+      value[1] = nil if value[1] == "nil"
+      value
+    end
+    hash = hash.to_h
     new(surname_and_initials: hash["surname_and_initials"], id: id, git: hash["git"], contact: hash["contact"])
   end	
 

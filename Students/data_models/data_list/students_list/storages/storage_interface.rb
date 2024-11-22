@@ -1,6 +1,6 @@
 class StorageInterface
 
-  def get_k_n_list(k,n,data_list = nil)
+  def get_k_n_list(k,n,data_list = nil, filter: nil)
     raise NotImplementedError, "Метод get_k_n_list не реаилизован."
   end
 
@@ -16,7 +16,7 @@ class StorageInterface
     raise NotImplementedError, "Метод update_by_id не реаилизован."
   end
 
-  def count_students
+  def count_students(filter = nil)
     raise NotImplementedError, "Метод count_students не реаилизован."
   end
 
