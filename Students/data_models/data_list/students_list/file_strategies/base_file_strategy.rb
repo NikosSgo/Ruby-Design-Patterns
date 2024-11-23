@@ -23,5 +23,15 @@ class BaseFileStrategy
       file.write(to_file(elements))
     end
   end
-  
+
+  protected
+
+  def from_file(file)
+    raise NotImplementedError, "Этот метод должен быть реализован в наследниках"
+  end
+
+  def to_file(elements)
+    raise NotImplementedError, "Этот метод должен быть реализован в наследниках"
+  end
+
 end

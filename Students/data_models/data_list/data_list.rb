@@ -45,4 +45,10 @@ class DataList
     DataTable.new(table)
   end
 
+  protected
+  
+  def data_row
+    raise NotImplementedError, "Этот метод должен быть реализован в наследниках"
+  end
+
 end
