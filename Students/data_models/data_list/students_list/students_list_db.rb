@@ -18,6 +18,15 @@ class StudentsListDB
   end 
   
   def update_by_id_in_db(id, updated_student)
+    existing_student = @client.query(<<~SQL).first
+    SELECT * FROM students 
+    WHERE surname_and_initials = '#{student.surname_and_initials}' 
+      AND git = #{null_field_to_sql(student.git)} 
+      AND contact = #{null_field_to_sql(student.contact)}
+    SQL
+    
+    return if existing_student
+
     git = null_field_to_sql(updated_student.git)
     contact = null_field_to_sql(updated_student.contact)
     query = <<~SQL
@@ -36,6 +45,15 @@ class StudentsListDB
   end
 
   def add_in_db(student)
+    existing_student = @client.query(<<~SQL).first
+    SELECT * FROM students 
+    WHERE surname_and_initials = '#{student.surname_and_initials}' 
+      AND git = #{null_field_to_sql(student.git)} 
+      AND contact = #{null_field_to_sql(student.contact)}
+    SQL
+    
+    return if existing_student
+
     git = null_field_to_sql(student.git)
     contact = null_field_to_sql(student.contact)
     query = <<~SQL

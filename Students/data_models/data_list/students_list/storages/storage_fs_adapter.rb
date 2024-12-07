@@ -28,6 +28,6 @@ class StorageFSAdapter < StorageInterface
   end
 
   def add(student)
-    @adapter.add(student)
+    @adapter.add_in_file(student)
   end
 end

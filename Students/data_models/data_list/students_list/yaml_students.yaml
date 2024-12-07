@@ -1,0 +1,32 @@
+- :id: 1
+  :git:
+  :surname_and_initials: Сгонниик Н.С.
+  :contact: '89286341261'
+- :id: 2
+  :git: https://github.com/BigNikita2005
+  :surname_and_initials: Григоренко Н.А.
+  :contact: '89281332214'
+- :id: 3
+  :git: https://github.com/BachIvan
+  :surname_and_initials: Бачурин И.А.
+  :contact: '89331246944'
+- :id: 4
+  :git: https://github.com/XMaxchel
+  :surname_and_initials: Небывалов М.В.
+  :contact:
+- :id: 5
+  :git: https://github.com/StudentFive
+  :surname_and_initials: Петрова А.С.
+  :contact: '89281234567'
+- :id: 6
+  :git: https://github.com/StudentSix
+  :surname_and_initials: Иванов И.И.
+  :contact:
+- :id: 7
+  :git: https://github.com/StudentSeven
+  :surname_and_initials: Смирнова Е.В.
+  :contact: '89283456789'
+- :id: 8
+  :git: https://github.com/StudentEight
+  :surname_and_initials: Кузнецов Д.А.
+  :contact: '89284567890'

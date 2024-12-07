@@ -17,19 +17,21 @@ data_list = DataListStudentShort.new(students)
 
 strategy = YamlFileStrategy.new("yaml_students.yaml")
 student_list_fs = StudentsListFS.new(strategy,data_list)
+
 storage_adapter_fs = StorageFSAdapter.new(student_list_fs)
 
-student_list_db = StudentsListDB.new()
-storage_adapter_db = StorageDBAdapter.new(student_list_db)
+# student_list_db = StudentsListDB.new()
+# storage_adapter_db = StorageDBAdapter.new(student_list_db)
 
 students_list = StudentsList.new(storage_adapter_fs)
+students_list.add(first_student)
+student_table_fs = students_list.get_k_n_list(2,3,nil).get_data
+student_table_fs.print
+# puts "\nКоличество элементов в файле подходящих под фильтры"
+# puts students_list.get_students_count(has_contact_filter)
 
-student_table_fs = students_list.get_k_n_list(1,4,nil,filter: has_contact_filter).get_data
-puts "\nКоличество элементов в файле подходящих под фильтры"
-puts students_list.get_students_count(has_contact_filter)
+# students_list.storage = storage_adapter_db
 
-students_list.storage = storage_adapter_db
-
-student_table_db = students_list.get_k_n_list(1,4,nil,filter: has_contact_filter).get_data
-puts "\nКоличество элементов в файле подходящих под фильтры"
-puts students_list.get_students_count(has_git_filter)
+# student_table_db = students_list.get_k_n_list(1,4,nil,filter: has_contact_filter).get_data
+# puts "\nКоличество элементов в файле подходящих под фильтры"
+# puts students_list.get_students_count(has_git_filter)

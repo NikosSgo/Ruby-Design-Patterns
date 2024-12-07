@@ -48,17 +48,23 @@ class StudentsListFS
 
   def update_by_id_in_file(id,student)
     read_all_in_file!
-    @data_list.elements = @data_list.elements.map do |el|
-      el = student if el.id == id
-      el
+    include_student = @data_list.elements.include?(student)
+    if include_student then
+      @data_list.elements = @data_list.elements.map do |el|
+        el = student if el.id == id
+        el
+      end
+      write_in_file
     end
-    write_in_file
   end
 
   def add_in_file(student)
     read_all_in_file!
-    @data_list.elements = @data_list.elements.append(student)
-    write_in_file
+    include_student = @data_list.elements.include?(student)
+    if include_student then
+      @data_list.elements = @data_list.elements.append(student)
+      write_in_file
+    end
   end
 
 
@@ -68,9 +74,12 @@ class StudentsListFS
 
     read_all_in_file!
     elements = filter ? filter.apply(@data_list.elements) : @data_list.elements
-
-    paginated_elements = elements[(k - 1) * n, (k - 1) * n + n]
-
+    paginated_elements = []
+    elements.each_with_index do |el,ind|
+      if ind >= (k - 1) * n && ind < (k - 1) * n + n then
+        paginated_elements << el
+      end
+    end
     if other_data_list
       other_data_list.elements = paginated_elements
     else
