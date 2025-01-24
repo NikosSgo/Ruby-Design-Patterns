@@ -36,18 +36,14 @@ class StudentsListFS
   ########################################################
 
   def get_by_id_in_file(id)
-    read_all_in_file!
     @data_list.elements.select {|el| el.id == id}
   end
 
   def delete_by_id_in_file(id)
-    read_all_in_file!
     @data_list.elements = @data_list.elements.reject {|el| el.id == id}
-    write_in_file
   end
 
   def update_by_id_in_file(id,student)
-    read_all_in_file!
     include_student = @data_list.elements.include?(student)
     if include_student then
       @data_list.elements = @data_list.elements.map do |el|
@@ -58,12 +54,12 @@ class StudentsListFS
     end
   end
 
-  def add_in_file(student)
-    read_all_in_file!
-    include_student = @data_list.elements.include?(student)
+  def add_in_file(new_student)
+    include_student = true
+    @data_list.elements.include
+    puts include_student
     if include_student then
-      @data_list.elements = @data_list.elements.append(student)
-      write_in_file
+      @data_list.elements = @data_list.elements.append(new_student)
     end
   end
 

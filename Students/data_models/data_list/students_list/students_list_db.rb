@@ -77,11 +77,15 @@ class StudentsListDB
 
     result = @client.query(query).to_a
 
-    short_list = result.map do |student_hash| 
+    paginated_elements = result.map do |student_hash| 
       student_hash = student_hash.transform_keys(&:to_sym)
       StudentShort.new(**student_hash)
     end
-    other_data_list&.update(short_list) || DataListStudentShort.new(short_list)
+    if other_data_list
+      other_data_list.elements = paginated_elements
+    else
+      DataListStudentShort.new(paginated_elements)
+    end
   end
 
   def count_students_in_db(filter = nil)
