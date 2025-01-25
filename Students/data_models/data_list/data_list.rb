@@ -45,6 +45,17 @@ class DataList
     DataTable.new(table)
   end
 
+  def add_observer(observer)
+    @observers << observer
+  end
+
+  def notify
+    @observers.each do |observer|
+      observer.set_table_params(self.get_names, self.count)
+      observer.set_table_data(self.get_data)
+    end
+  end
+
   protected
   
   def data_row

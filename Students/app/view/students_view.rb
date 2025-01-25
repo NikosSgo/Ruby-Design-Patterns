@@ -100,4 +100,92 @@ class StudentsView < FXHorizontalFrame
     FXButton.new(filtering_area, "Сбросить", opts: BUTTON_NORMAL).connect(SEL_COMMAND) do
         reset_filters
     end
+  def add_filtering_row(parent, label)
+    FXVerticalFrame.new(parent, opts: LAYOUT_FILL_X) do |frame|
+        FXLabel.new(frame, label)
+        combo_box = FXComboBox.new(frame, 3, opts: COMBOBOX_STATIC | FRAME_SUNKEN)
+        combo_box.numVisible = 3
+        combo_box.appendItem("Не важно")
+        combo_box.appendItem("Да")
+        combo_box.appendItem("Нет")
+        text_field = FXTextField.new(frame, 15, opts: TEXTFIELD_NORMAL)
+        text_field.enabled = false
+        self.filters[label] = { combo_box: combo_box, text_field: text_field }
+        combo_box.connect(SEL_COMMAND){ text_field.enabled = (combo_box.currentItem == 1) }
+    end
   end
+
+  def reset_filters()
+    self.filters.each_value do |field|
+        field[:combo_box].setCurrentItem(0) if !field[:combo_box].nil?
+        field[:text_field].text = ""
+        field[:text_field].enabled = (field[:combo_box].currentItem == 1) if !field[:combo_box].nil?
+    end
+    self.controller.refresh_data
+  end
+
+  def update_button_states()
+    selected_rows = get_selected_rows
+  
+    self.add_button.enabled = true
+    self.update_button.enabled = true
+  
+    case selected_rows.size
+    when 0
+        self.edit_button.enabled = false
+        self.delete_button.enabled = false
+    when 1
+        self.edit_button.enabled = true
+        self.delete_button.enabled = true
+    else
+        self.edit_button.enabled = false
+        self.delete_button.enabled = true
+    end
+  end
+
+  def update_page_label()
+    self.page_label.text = "Страница: #{self.current_page}/#{self.total_pages}"
+  end
+
+  def switch_page(direction)
+    new_page = self.current_page + direction
+    if new_page > 0 && new_page <= self.total_pages
+        self.current_page = new_page
+        self.controller.refresh_data
+    end
+  end
+
+  def clear_table
+    (0...self.table.numRows).each do |row_index|
+        (0...self.table.numColumns).each do |col_index|
+            self.table.setItemText(row_index, col_index, "")
+        end
+    end
+  end
+
+  def get_selected_rows()
+    selected_rows = []
+    (0...self.table.numRows).each do |row|
+        selected_rows << row if self.table.rowSelected?(row)
+    end
+    selected_rows
+  end
+
+  #events
+
+  def on_add
+    self.controller.add
+  end
+
+  def on_update
+    self.controller.update
+  end
+
+  def on_edit
+    self.controller.edit(get_selected_rows[0])
+  end
+
+  def on_delete
+    self.controller.delete(get_selected_rows)
+  end
+end
